@@ -47,42 +47,24 @@ watch(() => store.form.workshop, (workshop) => {
 
       <div class="form-group">
         <label for="workshop">Цех</label>
-        <select id="workshop" v-model="store.form.workshop" class="form-select" :disabled="store.isWorkshopDisabled">
-          <option :value="null" disabled>Выберите цех</option>
-          <option v-for="workshop in workshops" :key="workshop.id" :value="workshop">
-            {{ workshop.name }}
-          </option>
-        </select>
+        <Dropdown id="workshop" v-model="store.form.workshop" :options="workshops" placeholder="Выберите цех"
+          :disabled="store.isWorkshopDisabled" />
       </div>
 
       <div class="form-group">
         <label for="employee">Сотрудник</label>
-        <select id="employee" v-model="store.form.employee" class="form-select" :disabled="store.isEmployeeDisabled">
-          <option :value="null" disabled>Выберите сотрудника</option>
-          <option v-for="employee in employees" :key="employee.id" :value="employee">
-            {{ employee.name }}
-          </option>
-        </select>
+        <Dropdown id="employee" v-model="store.form.employee" :options="employees" placeholder="Выберите сотрудника"
+          :disabled="store.isEmployeeDisabled" />
       </div>
 
       <div class="form-group">
         <label for="brigade">Бригада</label>
-        <select id="brigade" v-model="store.form.brigade" class="form-select">
-          <option :value="null" disabled>Выберите бригаду</option>
-          <option v-for="brigade in brigades" :key="brigade.id" :value="brigade">
-            {{ brigade.name }}
-          </option>
-        </select>
+        <Dropdown id="brigade" v-model="store.form.brigade" :options="brigades" placeholder="Выберите бригаду" />
       </div>
 
       <div class="form-group">
         <label for="shift">Смена</label>
-        <select id="shift" v-model="store.form.shift" class="form-select">
-          <option :value="null" disabled>Выберите смену</option>
-          <option v-for="shift in shifts" :key="shift.id" :value="shift">
-            {{ shift.name }}
-          </option>
-        </select>
+        <Dropdown id="shift" v-model="store.form.shift" :options="shifts" placeholder="Выберите смену" />
       </div>
 
       <button class="submit-button" @click="submitForm">
