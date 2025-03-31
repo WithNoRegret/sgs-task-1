@@ -1,8 +1,12 @@
+export interface DropdownOption {
+  id: string;
+  name: string;
+  cityId?: string;
+  workshopId?: string;
+}
+
 export interface DropdownProps {
-  modelValue: any
-  options: any[]
+  options: DropdownOption[]
+  placeholder: string
   disabled?: boolean
-  placeholder?: string
-  optionLabel?: string
-  optionValue?: string
 }

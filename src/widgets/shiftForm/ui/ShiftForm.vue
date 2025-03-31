@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { ref, watch, computed, onMounted } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import Dropdown from '@/shared/ui/Dropdown'
 import TextButton from '@/shared/ui/TextButton'
 import type { City, Workshop, Employee, Brigade, Shift } from '@/shared/types'
 import { fetchInitialData, getWorkshopsByCity, getEmployeesByWorkshop } from '../api'
 import { useShiftFormStore } from '../model/store'
-import { useFormWatchers, useFormSubmit } from '../model/hooks'
+import { useFormSubmit } from '../model/hooks'
 
 const store = useShiftFormStore();
-const { watchCity, watchWorkshop } = useFormWatchers();
 const { submitForm } = useFormSubmit();
 
 
@@ -17,32 +16,65 @@ const workshops = ref<Workshop[]>([]);
 const employees = ref<Employee[]>([]);
 const brigades = ref<Brigade[]>([]);
 const shifts = ref<Shift[]>([]);
-
-onMounted(async () => {
-  const data = await fetchInitialData();
-  cities.value = data.cities;
-  brigades.value = data.brigades;
-  shifts.value = data.shifts;
-  watchCity();
-  watchWorkshop();
-});
-
-watch(() => store.form.city, (city) => {
-  if (city) workshops.value = getWorkshopsByCity(city.id);
-});
-
-watch(() => store.form.workshop, (workshop) => {
-  if (workshop) employees.value = getEmployeesByWorkshop(workshop.id);
-});
-
-const submitButtonText = 'Сохранить запись';
-const formData = computed(() => [
+const formData = ref([
   { id: 'city', label: 'Город', placeholder: 'Выберите город', options: cities.value, modelValue: store.form.city },
   { id: 'workshop', label: 'Цех', placeholder: 'Выберите цех', options: workshops.value, modelValue: store.form.workshop, disabled: store.isWorkshopDisabled },
   { id: 'employee', label: 'Сотрудник', placeholder: 'Выберите сотрудника', options: employees.value, modelValue: store.form.employee, disabled: store.isEmployeeDisabled },
   { id: 'brigade', label: 'Бригада', placeholder: 'Выберите бригаду', options: brigades.value, modelValue: store.form.brigade },
   { id: 'shift', label: 'Смена', placeholder: 'Выберите смену', options: shifts.value, modelValue: store.form.shift },
 ]);
+
+onMounted(async () => {
+  const data = await fetchInitialData();
+  cities.value = data.cities;
+  brigades.value = data.brigades;
+  shifts.value = data.shifts;
+  formData.value[0].options = data.cities;
+  formData.value[3].options = data.brigades;
+  formData.value[4].options = data.shifts;
+});
+
+watch(() => formData.value[0].modelValue, (city) => {
+  if (city) {
+    workshops.value = getWorkshopsByCity(city.id);
+    formData.value[1].disabled = false;
+    formData.value[1].options = workshops.value;
+    formData.value[1].modelValue = null;
+    formData.value[2].modelValue = null;
+    formData.value[2].disabled = true;
+    store.setCity(city);
+  }
+});
+
+watch(() => formData.value[1].modelValue, (workshop) => {
+  if (workshop) {
+    employees.value = getEmployeesByWorkshop(workshop.id);
+    formData.value[2].disabled = false;
+    formData.value[2].options = employees.value;
+    formData.value[2].modelValue = null;
+    store.setWorkshop(workshop as Workshop);
+  }
+});
+
+watch(() => formData.value[2].modelValue, (employee) => {
+  if (employee) {
+    store.setEmployee(employee as Employee);
+  }
+});
+
+watch(() => formData.value[3].modelValue, (brigade) => {
+  if (brigade) {
+    store.setBrigade(brigade as Brigade);
+  }
+});
+
+watch(() => formData.value[4].modelValue, (shift) => {
+  if (shift) {
+    store.setShift(shift as Shift);
+  }
+});
+
+const submitButtonText = 'Сохранить запись';
 </script>
 
 <template>

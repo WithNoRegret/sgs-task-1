@@ -22,5 +22,27 @@ export const useShiftFormStore = defineStore('shiftForm', () => {
     isEmployeeDisabled.value = true;
   };
 
-  return { form, resetForm, isWorkshopDisabled, isEmployeeDisabled };
+  const setCity = (city: City) => {
+    form.value.city = city;
+    isWorkshopDisabled.value = false;
+  };
+
+  const setWorkshop = (workshop: Workshop) => {
+    form.value.workshop = workshop;
+    isEmployeeDisabled.value = false;
+  };
+
+  const setEmployee = (employee: Employee) => {
+    form.value.employee = employee;
+  };
+
+  const setBrigade = (brigade: Brigade) => {
+    form.value.brigade = brigade;
+  };
+
+  const setShift = (shift: Shift) => {
+    form.value.shift = shift;
+  };
+
+  return { form, resetForm, setCity, setWorkshop, setEmployee, setBrigade, setShift, isWorkshopDisabled, isEmployeeDisabled };
 });
