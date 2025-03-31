@@ -14,29 +14,16 @@ const iconText = '+';
 </script>
 
 <template>
-  <div class="container">
-    <TextButton class="create-button" :text="buttonText" :icon="iconText" @click="handleCreateRecordButton" />
+  <div class="container mx-auto p-6 min-h-screen color-text-primary">
+    <TextButton
+      class="mt-6 px-6 py-3 w-full max-w-[300px] color-bg-buttons color-text-primary text-base font-medium hover:color-bg-buttons-hover hover:-translate-y-[1px] active:translate-y-0 active:color-bg-buttons-hover transition-transform"
+      :text="buttonText" :icon="iconText" @click="handleCreateRecordButton" />
     <ShiftRecordList />
   </div>
 </template>
 
 <style scoped>
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px;
-  min-height: 100vh;
-  color: var(--color-text-primary);
-}
-
 .create-button {
-  margin-top: 24px;
-  padding: 12px 24px;
-  width: 100%;
-  max-width: 300px;
-
-  background-color: var(--color-background-buttons);
-  color: var(--color-text-primary);
   font-size: 16px;
   font-weight: 500;
 }

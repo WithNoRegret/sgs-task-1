@@ -33,7 +33,7 @@ watch(() => store.form.city, (city) => {
 
 watch(() => store.form.workshop, (workshop) => {
   if (workshop) employees.value = getEmployeesByWorkshop(workshop.id);
-}); 
+});
 
 const submitButtonText = 'Сохранить запись';
 </script>
@@ -70,7 +70,8 @@ const submitButtonText = 'Сохранить запись';
         <Dropdown id="shift" v-model="store.form.shift" :options="shifts" placeholder="Выберите смену" />
       </div>
 
-      <TextButton class="submit-button" :text="submitButtonText" @click="submitForm" />
+      <TextButton class="w-full mt-4 px-6 py-3 color-bg-buttons color-text-primary text-base hover:color-bg-buttons-hover" :text="submitButtonText"
+        @click="submitForm" />
     </div>
   </div>
 </template>
@@ -136,33 +137,6 @@ label {
 .form-select option {
   background-color: var(--color-background-secondary);
   padding: 0.5rem;
-}
-
-.submit-button {
-  width: 100%;
-  padding: 0.75rem;
-  background-color: var(--color-background-buttons);
-  color: var(--color-text-primary);
-  border: none;
-  border-radius: 6px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-  margin-top: 1rem;
-}
-
-.submit-button:hover:not(:disabled) {
-  background-color: var(--color-background-buttons-hover);
-}
-
-.submit-button:active:not(:disabled) {
-  background-color: var(--color-background-buttons-hover);
-}
-
-.submit-button:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
 }
 
 @media (max-width: 640px) {

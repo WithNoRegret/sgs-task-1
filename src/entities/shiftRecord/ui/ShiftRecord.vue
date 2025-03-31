@@ -17,7 +17,8 @@ const buttonText = "Удалить";
 
 <template>
   <div class="shift-record">
-    <TextButton class="delete-button" :text="buttonText" @click="handleClick" />
+    <TextButton class="absolute top-2 right-2  color-text-buttons color-bg-danger px-2 py-1" :text="buttonText"
+      @click="handleClick" />
     <div class="record-field">
       <span class="field-label">Город:</span>
       <span class="field-value">{{ shift.record.city }}</span>
@@ -53,9 +54,6 @@ const buttonText = "Удалить";
 }
 
 .delete-button {
-  position: absolute;
-  top: 8px;
-  right: 8px;
   background-color: var(--color-background-buttons-danger);
   color: var(--color-text-buttons);
 }

@@ -21,40 +21,13 @@ const updateValue = (event: Event) => {
 
 <template>
   <select :value="modelValue ? String(modelValue[optionValue || 'id']) : ''" @change="updateValue" :disabled="disabled"
-    class="dropdown-select">
-    <option value="" disabled>
+    class="w-full p-3 color-bg-primary color-border-primary rounded-full color-text-primary text-sm transition-colors disabled:opacity-70 disabled:cursor-not-allowed focus:outline-none focus:color-border-accent no-appearance">
+    <option value="" disabled class="color-bg-secondary p-2">
       {{ placeholder || 'Выберите значение' }}
     </option>
-    <option v-for="option in normalizedOptions" :key="option.value" :value="String(option.value)">
+    <option v-for="option in normalizedOptions" :key="option.value" :value="String(option.value)"
+      class="color-bg-secondary p-2">
       {{ option.label }}
     </option>
   </select>
 </template>
-
-<style scoped>
-.dropdown-select {
-  width: 100%;
-  padding: 0.75rem;
-  background-color: var(--color-background-primary);
-  border: 1px solid var(--color-border-primary);
-  border-radius: 6px;
-  color: var(--color-text-primary);
-  font-size: 1rem;
-  transition: border-color 0.2s;
-}
-
-.dropdown-select:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-.dropdown-select:focus {
-  outline: none;
-  border-color: var(--color-border-accent);
-}
-
-.dropdown-select option {
-  background-color: var(--color-background-secondary);
-  padding: 0.5rem;
-}
-</style>
