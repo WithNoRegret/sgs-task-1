@@ -18,7 +18,6 @@ const { records } = useRecordsList()
 
 <style scoped>
 .records-list-container {
-  min-height: 100vh;
   padding: 2rem;
   color: var(--color-text-primary);
   max-width: 1200px;
