@@ -33,8 +33,8 @@ const { shift } = defineProps<{
 
 <style scoped>
 .shift-record {
-  background-color: #161b22;
-  border: 1px solid #30363d;
+  background-color: var(--color-background-secondary);
+  border: 1px solid var(--color-border-primary);
   border-radius: 6px;
   padding: 1rem;
   margin-bottom: 0.75rem;
@@ -42,8 +42,8 @@ const { shift } = defineProps<{
 }
 
 .shift-record:hover {
-  background-color: #1f2937;
-  border-color: #58a6ff;
+  background-color: var(--color-background-primary-hover);
+  border-color: var(--color-border-accent);
 }
 
 .record-field {
@@ -58,14 +58,14 @@ const { shift } = defineProps<{
 }
 
 .field-label {
-  color: #8b949e;
+  color: var(--color-text-label);
   font-weight: 500;
   min-width: 100px;
   margin-right: 1rem;
 }
 
 .field-value {
-  color: #c9d1d9;
+  color: var(--color-text-primary);
   font-weight: 400;
 }
 
