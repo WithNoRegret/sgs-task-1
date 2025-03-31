@@ -9,7 +9,7 @@ const { records } = useRecordsList()
   <div class="records-list-container">
     <h2 class="records-title">Журнал сменных записей</h2>
     <div class="records-list">
-      <div class="record-item" v-for="record in records">
+      <div class="record-item" v-for="record in records" :key="record.id">
         <ShiftRecord :shift="record" />
       </div>
     </div>
