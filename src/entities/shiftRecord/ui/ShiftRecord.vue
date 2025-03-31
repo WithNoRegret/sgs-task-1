@@ -56,6 +56,12 @@ const buttonText = "Удалить";
   position: absolute;
   top: 8px;
   right: 8px;
+  background-color: var(--color-background-buttons-danger);
+  color: var(--color-text-buttons);
+}
+
+.delete-button:hover {
+  background-color: var(--color-background-buttons-danger-hover);
 }
 
 .record-field {

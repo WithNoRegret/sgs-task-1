@@ -1,20 +1,21 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import ShiftRecordList from '@/widgets/shiftRecordList'
+import TextButton from '@/shared/ui/TextButton'
 
 const router = useRouter()
 
 const handleCreateRecordButton = () => {
   router.push('/form')
 }
+
+const buttonText = 'Создать новую запись';
+const iconText = '+';
 </script>
 
 <template>
   <div class="container">
-    <button class="create-button" @click="handleCreateRecordButton">
-      <span class="plus-icon">+</span>
-      Создать новую запись
-    </button>
+    <TextButton class="create-button" :text="buttonText" :icon="iconText" @click="handleCreateRecordButton" />
     <ShiftRecordList />
   </div>
 </template>
@@ -29,10 +30,6 @@ const handleCreateRecordButton = () => {
 }
 
 .create-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
   margin-top: 24px;
   padding: 12px 24px;
   width: 100%;
@@ -40,12 +37,8 @@ const handleCreateRecordButton = () => {
 
   background-color: var(--color-background-buttons);
   color: var(--color-text-primary);
-  border: none;
-  border-radius: 6px;
   font-size: 16px;
   font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
 }
 
 .create-button:hover {

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watch, onMounted } from 'vue'
 import Dropdown from '@/shared/ui/Dropdown'
+import TextButton from '@/shared/ui/TextButton'
 import type { City, Workshop, Employee, Brigade, Shift } from '@/shared/types'
 import { fetchInitialData, getWorkshopsByCity, getEmployeesByWorkshop } from '../api'
 import { useShiftFormStore } from '../model/store'
@@ -32,7 +33,9 @@ watch(() => store.form.city, (city) => {
 
 watch(() => store.form.workshop, (workshop) => {
   if (workshop) employees.value = getEmployeesByWorkshop(workshop.id);
-});  
+}); 
+
+const submitButtonText = 'Сохранить запись';
 </script>
 
 <template>
@@ -67,9 +70,7 @@ watch(() => store.form.workshop, (workshop) => {
         <Dropdown id="shift" v-model="store.form.shift" :options="shifts" placeholder="Выберите смену" />
       </div>
 
-      <button class="submit-button" @click="submitForm">
-        Сохранить запись
-      </button>
+      <TextButton class="submit-button" :text="submitButtonText" @click="submitForm" />
     </div>
   </div>
 </template>

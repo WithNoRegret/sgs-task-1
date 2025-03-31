@@ -1,6 +1,7 @@
 <script setup lang="ts">
 interface TextButtonProps {
   text: string
+  icon?: string
 }
 
 const props = defineProps<TextButtonProps>()
@@ -8,23 +9,23 @@ const props = defineProps<TextButtonProps>()
 
 <template>
   <button class="text-btn">
-    {{ props.text }}
+    <span>{{ props.icon }}</span>
+    <span>{{ props.text }}</span>
   </button>
 </template>
 
 <style scoped>
 .text-btn {
-  background-color: var(--color-background-buttons-danger);
-  color: var(--color-text-buttons);
   border: none;
   border-radius: 4px;
   padding: 4px 8px;
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.2s;
-}
 
-.text-btn:hover {
-  background-color: var(--color-background-buttons-danger-hover);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
 }
 </style>
