@@ -2,15 +2,15 @@
 import { useRecordsList } from '../model/useRecordList'
 import ShiftRecord from '@/entities/shiftRecord/ui/ShiftRecord.vue'
 
-const { shifts } = useRecordsList()
+const { records } = useRecordsList()
 </script>
 
 <template>
   <div class="records-list-container">
     <h2 class="records-title">Журнал сменных записей</h2>
-    <div class="records-list" v-for="shift in shifts">
-      <div class="record-item">
-        <ShiftRecord :shift="shift" />
+    <div class="records-list">
+      <div class="record-item" v-for="record in records">
+        <ShiftRecord :shift="record" />
       </div>
     </div>
   </div>

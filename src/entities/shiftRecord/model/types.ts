@@ -5,3 +5,8 @@ export interface IShiftRecord {
   brigade: string;
   shift: string;
 }
+
+export interface IShiftRecordId {
+  id: string,
+  record: IShiftRecord
+}

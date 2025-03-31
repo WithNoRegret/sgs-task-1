@@ -1,32 +1,42 @@
 <script setup lang="ts">
-import type { IShiftRecord } from '../model/types'
+import TextButton from '@/shared/ui/TextButton'
+import { useShiftsStore, type IShiftRecordId } from '../model'
 
 const { shift } = defineProps<{
-  shift: IShiftRecord
+  shift: IShiftRecordId
 }>()
+
+const { deleteRecordById } = useShiftsStore();
+
+const handleClick = () => {
+  deleteRecordById(shift.id);
+}
+
+const buttonText = "Удалить";
 </script>
 
 <template>
   <div class="shift-record">
+    <TextButton class="delete-button" :text="buttonText" @click="handleClick" />
     <div class="record-field">
       <span class="field-label">Город:</span>
-      <span class="field-value">{{ shift.city }}</span>
+      <span class="field-value">{{ shift.record.city }}</span>
     </div>
     <div class="record-field">
       <span class="field-label">Цех:</span>
-      <span class="field-value">{{ shift.workshop }}</span>
+      <span class="field-value">{{ shift.record.workshop }}</span>
     </div>
     <div class="record-field">
       <span class="field-label">Сотрудник:</span>
-      <span class="field-value">{{ shift.employee }}</span>
+      <span class="field-value">{{ shift.record.employee }}</span>
     </div>
     <div class="record-field">
       <span class="field-label">Бригада:</span>
-      <span class="field-value">{{ shift.brigade }}</span>
+      <span class="field-value">{{ shift.record.brigade }}</span>
     </div>
     <div class="record-field">
       <span class="field-label">Смена:</span>
-      <span class="field-value">{{ shift.shift }}</span>
+      <span class="field-value">{{ shift.record.shift }}</span>
     </div>
   </div>
 </template>
@@ -39,11 +49,13 @@ const { shift } = defineProps<{
   padding: 1rem;
   margin-bottom: 0.75rem;
   transition: all 0.2s ease;
+  position: relative;
 }
 
-.shift-record:hover {
-  background-color: var(--color-background-primary-hover);
-  border-color: var(--color-border-accent);
+.delete-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
 }
 
 .record-field {

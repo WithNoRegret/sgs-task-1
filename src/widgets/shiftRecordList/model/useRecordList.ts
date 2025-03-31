@@ -1,8 +1,9 @@
+import { computed } from 'vue'
 import { useShiftsStore } from '@/entities/shiftRecord'
 
 export const useRecordsList = () => {
   const shiftsStore = useShiftsStore()
-  const shifts = shiftsStore.getRecords()
-  
-  return { shifts }
+  const records = computed(() => shiftsStore.getRecords())
+
+  return { records }
 }
