@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, computed, onMounted } from 'vue'
 import Dropdown from '@/shared/ui/Dropdown'
 import TextButton from '@/shared/ui/TextButton'
 import type { City, Workshop, Employee, Brigade, Shift } from '@/shared/types'
@@ -36,112 +36,29 @@ watch(() => store.form.workshop, (workshop) => {
 });
 
 const submitButtonText = 'Сохранить запись';
+const formData = computed(() => [
+  { id: 'city', label: 'Город', placeholder: 'Выберите город', options: cities.value, modelValue: store.form.city },
+  { id: 'workshop', label: 'Цех', placeholder: 'Выберите цех', options: workshops.value, modelValue: store.form.workshop, disabled: store.isWorkshopDisabled },
+  { id: 'employee', label: 'Сотрудник', placeholder: 'Выберите сотрудника', options: employees.value, modelValue: store.form.employee, disabled: store.isEmployeeDisabled },
+  { id: 'brigade', label: 'Бригада', placeholder: 'Выберите бригаду', options: brigades.value, modelValue: store.form.brigade },
+  { id: 'shift', label: 'Смена', placeholder: 'Выберите смену', options: shifts.value, modelValue: store.form.shift },
+]);
 </script>
 
 <template>
-  <div class="form-container">
-    <div class="form-card">
-      <h2 class="form-title">Новая сменная запись</h2>
+  <div class="min-h-screen flex-center p-8">
+    <div class="color-bg-secondary border-base color-border-primary rounded-[8px] p-6 md:p-8 w-full max-w-[600px]">
+      <h2 class="mt-0 mb-6 text-2xl color-text-title text-center">Новая сменная запись</h2>
 
-      <div class="form-group">
-        <label for="city">Город</label>
-        <Dropdown id="city" v-model="store.form.city" :options="cities" placeholder="Выберите город" />
+      <div class="mb-6" v-for="field in formData" :key="field.id">
+        <label :for="field.id" class="block mb-2 font-medium color-text-label">{{ field.label }}</label>
+        <Dropdown :id="field.id" v-model="field.modelValue" :options="field.options" :placeholder="field.placeholder"
+          :disabled="field.disabled" />
       </div>
 
-      <div class="form-group">
-        <label for="workshop">Цех</label>
-        <Dropdown id="workshop" v-model="store.form.workshop" :options="workshops" placeholder="Выберите цех"
-          :disabled="store.isWorkshopDisabled" />
-      </div>
-
-      <div class="form-group">
-        <label for="employee">Сотрудник</label>
-        <Dropdown id="employee" v-model="store.form.employee" :options="employees" placeholder="Выберите сотрудника"
-          :disabled="store.isEmployeeDisabled" />
-      </div>
-
-      <div class="form-group">
-        <label for="brigade">Бригада</label>
-        <Dropdown id="brigade" v-model="store.form.brigade" :options="brigades" placeholder="Выберите бригаду" />
-      </div>
-
-      <div class="form-group">
-        <label for="shift">Смена</label>
-        <Dropdown id="shift" v-model="store.form.shift" :options="shifts" placeholder="Выберите смену" />
-      </div>
-
-      <TextButton class="w-full mt-4 px-6 py-3 color-bg-buttons color-text-primary text-base hover:color-bg-buttons-hover" :text="submitButtonText"
-        @click="submitForm" />
+      <TextButton
+        class="w-full mt-4 px-6 py-3 color-bg-buttons color-text-primary text-base hover:color-bg-buttons-hover"
+        :text="submitButtonText" @click="submitForm" />
     </div>
   </div>
 </template>
-
-<style scoped>
-.form-container {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-}
-
-.form-card {
-  background-color: var(--color-background-secondary);
-  border: 1px solid var(--color-border-primary);
-  border-radius: 8px;
-  padding: 2rem;
-  width: 100%;
-  max-width: 600px;
-}
-
-.form-title {
-  margin-top: 0;
-  margin-bottom: 1.5rem;
-  font-size: 1.5rem;
-  color: var(--color-text-title);
-  text-align: center;
-}
-
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: var(--color-text-label);
-}
-
-.form-select {
-  width: 100%;
-  padding: 0.75rem;
-  background-color: var(--color-background-primary);
-  border: 1px solid var(--color-border-primary);
-  border-radius: 6px;
-  color: var(--color-text-primary);
-  font-size: 1rem;
-  transition: border-color 0.2s;
-}
-
-.form-select:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-.form-select:focus {
-  outline: none;
-  border-color: var(--color-border-accent);
-}
-
-.form-select option {
-  background-color: var(--color-background-secondary);
-  padding: 0.5rem;
-}
-
-@media (max-width: 640px) {
-  .form-card {
-    padding: 1.5rem;
-  }
-}
-</style>

@@ -21,7 +21,7 @@ const updateValue = (event: Event) => {
 
 <template>
   <select :value="modelValue ? String(modelValue[optionValue || 'id']) : ''" @change="updateValue" :disabled="disabled"
-    class="w-full p-3 color-bg-primary color-border-primary rounded-full color-text-primary text-sm transition-colors disabled:opacity-70 disabled:cursor-not-allowed focus:outline-none focus:color-border-accent no-appearance">
+    class="w-full p-3 color-bg-primary border-base color-border-primary rounded-full color-text-primary text-sm transition-colors disabled:opacity-70 disabled:cursor-not-allowed focus:outline-none no-appearance">
     <option value="" disabled class="color-bg-secondary p-2">
       {{ placeholder || 'Выберите значение' }}
     </option>

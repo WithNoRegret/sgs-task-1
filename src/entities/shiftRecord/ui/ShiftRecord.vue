@@ -1,103 +1,38 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import TextButton from '@/shared/ui/TextButton'
-import { useShiftsStore, type IShiftRecordId } from '../model'
+import { useShiftsStore, type IShiftRecord } from '../model'
 
-const { shift } = defineProps<{
-  shift: IShiftRecordId
-}>()
+interface ShiftRecordProps {
+  record: IShiftRecord,
+  id: string
+}
+
+const { record, id } = defineProps<ShiftRecordProps>()
 
 const { deleteRecordById } = useShiftsStore();
 
 const handleClick = () => {
-  deleteRecordById(shift.id);
+  deleteRecordById(id);
 }
 
 const buttonText = "Удалить";
+const recordData = computed(() => [
+  { label: 'Город:', value: record.city },
+  { label: 'Цех:', value: record.workshop },
+  { label: 'Сотрудник:', value: record.employee },
+  { label: 'Бригада:', value: record.brigade },
+  { label: 'Смена:', value: record.shift }
+]);
 </script>
 
 <template>
-  <div class="shift-record">
-    <TextButton class="absolute top-2 right-2  color-text-buttons color-bg-danger px-2 py-1" :text="buttonText"
+  <div class="color-bg-secondary border-base color-border-primary rounded-[6px] p-3 mb-3 relative md:p-4">
+    <TextButton class="absolute top-2 right-2 color-text-buttons color-bg-danger px-2 py-1" :text="buttonText"
       @click="handleClick" />
-    <div class="record-field">
-      <span class="field-label">Город:</span>
-      <span class="field-value">{{ shift.record.city }}</span>
-    </div>
-    <div class="record-field">
-      <span class="field-label">Цех:</span>
-      <span class="field-value">{{ shift.record.workshop }}</span>
-    </div>
-    <div class="record-field">
-      <span class="field-label">Сотрудник:</span>
-      <span class="field-value">{{ shift.record.employee }}</span>
-    </div>
-    <div class="record-field">
-      <span class="field-label">Бригада:</span>
-      <span class="field-value">{{ shift.record.brigade }}</span>
-    </div>
-    <div class="record-field">
-      <span class="field-label">Смена:</span>
-      <span class="field-value">{{ shift.record.shift }}</span>
+    <div class="flex flex-col items-start mb-2 last:mb-0 md:flex-row md:items-center" v-for="field in recordData">
+      <span class="color-text-label font-medium min-w-[100px] mr-0 mb-1 md:mr-4 md:mb-0">{{ field.label }}</span>
+      <span class="color-text-primary font-normal">{{ field.value }}</span>
     </div>
   </div>
 </template>
-
-<style scoped>
-.shift-record {
-  background-color: var(--color-background-secondary);
-  border: 1px solid var(--color-border-primary);
-  border-radius: 6px;
-  padding: 1rem;
-  margin-bottom: 0.75rem;
-  transition: all 0.2s ease;
-  position: relative;
-}
-
-.delete-button {
-  background-color: var(--color-background-buttons-danger);
-  color: var(--color-text-buttons);
-}
-
-.delete-button:hover {
-  background-color: var(--color-background-buttons-danger-hover);
-}
-
-.record-field {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.5rem;
-  line-height: 1.5;
-}
-
-.record-field:last-child {
-  margin-bottom: 0;
-}
-
-.field-label {
-  color: var(--color-text-label);
-  font-weight: 500;
-  min-width: 100px;
-  margin-right: 1rem;
-}
-
-.field-value {
-  color: var(--color-text-primary);
-  font-weight: 400;
-}
-
-@media (max-width: 768px) {
-  .shift-record {
-    padding: 0.75rem;
-  }
-
-  .record-field {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .field-label {
-    margin-bottom: 0.25rem;
-    margin-right: 0;
-  }
-}
-</style>

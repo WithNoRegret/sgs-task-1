@@ -1,15 +1,12 @@
 <script setup lang="ts">
-interface TextButtonProps {
-  text: string
-  icon?: string
-}
+import type { TextButtonProps } from './api'
 
-const props = defineProps<TextButtonProps>()
+const { icon, text } = defineProps<TextButtonProps>()
 </script>
 
 <template>
   <button class="border-none rounded-full cursor-pointer transition-colors duration-200 flex-center gap-2">
-    <span v-if="props.icon">{{ props.icon }}</span>
-    <span>{{ props.text }}</span>
+    <span v-if="icon">{{ icon }}</span>
+    <span>{{ text }}</span>
   </button>
 </template>
